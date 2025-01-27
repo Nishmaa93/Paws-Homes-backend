@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 //creating a function
 const connectDB = () =>{
-    mongoose.connect(process.env.MONGODB_CLOUDURL).then(()=>{
+    mongoose.connect(process.env.MONGODB_URL).then(()=>{
         console.log("Database connected succesfully")
     })
 }
