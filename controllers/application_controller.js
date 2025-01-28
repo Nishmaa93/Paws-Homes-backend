@@ -6,7 +6,7 @@ const userApplication = async(req,res)=>{
     if(!name ||!age || !occupation || !address || !email || !phonenumber || haveDog === undefined  || !livingSituation || !reasonsForAdopting){
         return res.json({
             'success': false,
-            'message': 'Please enter all feilds'
+            'message': 'Please enter all fields'
         })
     }
     try {
