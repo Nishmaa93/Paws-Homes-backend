@@ -53,7 +53,7 @@ const loginUser = async(req,res)=>{
     const{email,password} = req.body;
     if(!email|| !password){
         return res.status(400).json({
-            "sucess" : false,
+            "success" : false,
             "message" : "Please enter all fields"
         })
     }
@@ -84,7 +84,8 @@ const loginUser = async(req,res)=>{
             "message" : "Login successful",
             "token" : token,
             "userData" : user,
-            "isAdmin":user.isAdmin
+            "isAdmin":user.isAdmin,
+            "user_id":user._id,
         })
     } catch (error) {
         console.log(error)

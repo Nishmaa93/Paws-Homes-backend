@@ -19,6 +19,7 @@ const authGuard  = (req,res,next) =>{
     // authorization format : "Bearer tokenajknjfknv" so split the token by space and take only the token
 
     const token = authHeader.split(' ')[1]
+    console.log("token: ",token);
     //if token not found send response
     if(!token || token === ""){
         return res.status(400).json({
@@ -28,9 +29,9 @@ const authGuard  = (req,res,next) =>{
     }
     try {
         //verify the token and get user information
-        const decodedUser = jwt.verify(token, process.env.JWT_SECRET)
+        const decodedUser = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decodedUser;
-        next()
+        next();
         
     } catch (error) {
         console.log(error)

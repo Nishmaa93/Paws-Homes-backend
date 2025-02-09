@@ -1,6 +1,9 @@
 const applicationModel = require('../models/application_model')
+const pet_listing = require('../models/pet_listing_model')
+
 
 const userApplication = async(req,res)=>{
+    console.log("application hitted...")
     const {name,age,occupation,address,email,phonenumber,haveDog,livingSituation,reasonsForAdopting,petId}= req.body;
     console.log(req.body)
     if(!name ||!age || !occupation || !address || !email || !phonenumber || haveDog === undefined  || !livingSituation || !reasonsForAdopting){
@@ -120,10 +123,21 @@ const getApplicationsByUserId = async (req, res) => {
             });
         }
 
+                // Fetch pet details for each application
+                const applicationsWithPets = await Promise.all(
+                    applications.map(async (application) => {
+                        const petData = await pet_listing.findById(application.petId); // Assuming petId exists
+                        return {
+                            ...application.toObject(),
+                            petData: petData || null, // Attach pet data or null if not found
+                        };
+                    })
+                );
+
         res.status(200).json({
             "success": true,
-            "message": "Applications fetched successfully",
-            "applications": applications
+            "message": "Applications and pet data fetched successfully",
+            "applications": applicationsWithPets
         });
     } catch (error) {
         console.error('Error fetching applications:', error);
